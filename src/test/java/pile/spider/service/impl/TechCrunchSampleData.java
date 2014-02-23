@@ -2,8 +2,12 @@ package pile.spider.service.impl;
 
 public class TechCrunchSampleData {
 
-    public static final String DETAIL_PAGE_GOOGLE=detailPageGoogle();
-    public static final String DETAIL_PAGE_HYV=detailPageHyv();
+    public static final String DETAIL_PAGE_GOOGLE = detailPageGoogle();
+    public static final String DETAIL_PAGE_HYV = detailPageHyv();
+    public static final String FIRST_PAGE = firstPage();
+    public static final String MIDDLE_PAGE = middlePage();
+    public static final String LAST_PAGE = lastPage();
+    public static final String TWO_BLOCKS = twoBlocks();
 
     private static String detailPageGoogle() {
         return "<!-- BEGIN Sailthru Horizon Meta Information -->\n" +
@@ -111,5 +115,76 @@ public class TechCrunchSampleData {
                 "\t\t\t\t</div>\n" +
                 "\t\t\t</div>\n";
 
+    }
+
+    private static String firstPage() {
+        return "<ol class=\"pagination\">\n" +
+                "\t\t<li><a>1</a></li><li><a href='/page/2'>2</a></li><li class=\"no-border\"><a href='/page/3'>3</a></li><li class=\"ellipses\">...</li><li><a href='/page/6250'>6,250</a></li><li><a href=\"/page/2\">Next <span class=\"icon-video-play next\"></span></a></li>\t</ol>";
+    }
+
+    private static String middlePage() {
+        return "<ol class=\"pagination\">\n" +
+                "\t\t<li><a href=\"/page/99\"><span class=\"icon-play prev\"></span><span> Previous</span></a></li><li class=\"no-border\"><a href='/'>1</a></li><li class=\"ellipses\">...</li><li><a href='/page/98'>98</a></li><li><a href='/page/99'>99</a></li><li><a>100</a></li><li><a href='/page/101'>101</a></li><li class=\"no-border\"><a href='/page/102'>102</a></li><li class=\"ellipses\">...</li><li><a href='/page/6251'>6,251</a></li><li><a href=\"/page/101\">Next <span class=\"icon-video-play next\"></span></a></li>\t</ol>";
+    }
+
+    private static String lastPage() {
+        return "<ol class=\"pagination\">\n" +
+                "\t\t<li><a href=\"/page/6250\"><span class=\"icon-play prev\"></span><span> Previous</span></a></li><li class=\"no-border\"><a href='/'>1</a></li><li class=\"ellipses\">...</li><li><a href='/page/6249'>6,249</a></li><li><a href='/page/6250'>6,250</a></li><li><a>6,251</a></li>\t</ol>";
+    }
+
+    private static String twoBlocks() {
+        return "STUFF_BEFORE\n" +
+                "<li class=\"river-block\" id=\"961978\" data-permalink=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/\" data-shareTitle=\"Visionect Is A Low-Cost Platform For Building E-Paper&nbsp;Applications\">\n" +
+                "\t<div class=\"block block-thumb\">\n" +
+                "\t\t\t\t <div class=\"tags\" data-omni-sm-delegate=\"gbl_river_category\">\n" +
+                "\t\t \t\t\t\t\t \t\t\t\t\t \t\t\t\t\t \t\t</div>\n" +
+                "\t\t\t\t<div class=\"block-content\">\n" +
+                "\n" +
+                "\t\t\t\t\t<a href=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/\" class=\"thumb\"><img data-omni-sm=\"gbl_river_image\" alt=\"Visionect Is A Low-Cost Platform For Building E-Paper&nbsp;Applications\" data-src=\"http://tctechcrunch2011.files.wordpress.com/2014/02/screen-shot-2014-02-21-at-5-15-41-pm.png?w=210&#038;h=158&#038;crop=1\" data-tc-lazyload=\"deferred\" src=\"http://s1.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/210x210.png?m=1391183173g\" /></a>\n" +
+                "\n" +
+                "\t\t\t<h2 class=\"post-title\"><a href=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/\" data-omni-sm=\"gbl_river_headline\">Visionect Is A Low-Cost Platform For Building E-Paper&nbsp;Applications</a></h2>\n" +
+                "\t\t\t<div class=\"byline\">\n" +
+                "\t\t\t\t<time datetime=\"2014-02-21 08:04:42\" class=\"timestamp\">yesterday</time> by <a href=\"/author/john-biggs/\" title=\"Posts by John Biggs\" onclick=\"s_objectID='river_author';\" rel=\"author\">John Biggs</a>\t\t\t</div>\n" +
+                "\t\t\t<p class=\"excerpt\">Building hardware projects has become immensely simpler thanks to <a href=\"http://techcrunch.com/tag/Arduino\">Arduino</a> and Raspberry Pi. But <a target=\"_blank\" href=\"http://www.visionect-epaper.com/index1.html?utm_expid=82327565-1.2oQdWtHtST6BKiQ5PLqnhg.1\">Visionect</a> scratches a far more-intersting itch: e-paper interface design. <a href=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/\" class=\"read-more\" data-omni-sm=\"gbl_river_readmore\">Read&nbsp;More</a></p>\n" +
+                "\t\t\t\t\t\t<div class=\"social-cluster\">\n" +
+                "\t\t\t\t<ul class=\"social-cluster-list\">\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<li><a href=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/#comments\" rel=\"external\" class=\"icon-comment\"><span class=\"social-count\"><fb:comments-count href=\"http://techcrunch.com/2014/02/21/visionect-is-a-low-cost-platform-for-building-e-paper-applications/\"></fb:comments-count></span></a></li>\n" +
+                "\t\t\t\t\t\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-facebook\"><span class=\"social-count\" id=\"fb-newshare-961978\"></span></a></li>\n" +
+                "\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-twitter\"><span class=\"social-count\" id=\"tweet-newshare-961978\"></span></a></li>\n" +
+                "\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-linkedin\"><span class=\"social-count\" id=\"linkedin-newshare-961978\"></span></a></li>\n" +
+                "\t\t\t\t</ul>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t<div id=\"clear\" style=\"clear:both;\"></div>\n" +
+                "\t\t</div>\n" +
+                "\t</div>\n" +
+                "</li>\n" +
+                "<li class=\"river-block\" id=\"962037\" data-permalink=\"http://techcrunch.com/2014/02/21/whatsapp/\" data-shareTitle=\"WhatsApp Was Valued At ~$1.5B In Final Round Before&nbsp;Sale\">\n" +
+                "\t<div class=\"block block-thumb\">\n" +
+                "\t\t\t\t <div class=\"tags\" data-omni-sm-delegate=\"gbl_river_category\">\n" +
+                "\t\t \t\t\t\t\t\t\t<a href=\"http://techcrunch.com/fundings-exits/\" title=\"Fundings &amp; Exits\" class=\"tag\"><span>Fundings &amp; Exits</span></a>\n" +
+                "\t\t\t\t\t \t\t\t\t\t \t\t</div>\n" +
+                "\t\t\t\t<div class=\"block-content\">\n" +
+                "\n" +
+                "\t\t\t\t\t<a href=\"http://techcrunch.com/2014/02/21/whatsapp/\" class=\"thumb\"><img data-omni-sm=\"gbl_river_image\" alt=\"WhatsApp Was Valued At ~$1.5B In Final Round Before&nbsp;Sale\" data-src=\"http://tctechcrunch2011.files.wordpress.com/2014/02/yfqxqct.gif?w=210&#038;h=158&#038;crop=1\" data-tc-lazyload=\"deferred\" src=\"http://s1.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/210x210.png?m=1391183173g\" /></a>\n" +
+                "\n" +
+                "\t\t\t<h2 class=\"post-title\"><a href=\"http://techcrunch.com/2014/02/21/whatsapp/\" data-omni-sm=\"gbl_river_headline\">WhatsApp Was Valued At ~$1.5B In Final Round Before&nbsp;Sale</a></h2>\n" +
+                "\t\t\t<div class=\"byline\">\n" +
+                "\t\t\t\t<time datetime=\"2014-02-21 05:45:41\" class=\"timestamp\">yesterday</time> by <a href=\"/author/alexia-tsotsis/\" title=\"Posts by Alexia Tsotsis\" onclick=\"s_objectID='river_author';\" rel=\"author\">Alexia Tsotsis</a>\t\t\t</div>\n" +
+                "\t\t\t<p class=\"excerpt\">WhatsApp did a great job of being surreptitious about its funding while growing into a messaging monster. But as they say, the truth always comes out.\n" +
+                "\n" +
+                "In this case, the truth is that the company had three rounds of financing, with Sequoia as the sole investor. According to documents unearthed by VC Experts, WhatsApp went from a $250k seed round in 2009 to an $8 million round at an ~$80 million&hellip; <a href=\"http://techcrunch.com/2014/02/21/whatsapp/\" class=\"read-more\" data-omni-sm=\"gbl_river_readmore\">Read&nbsp;More</a></p>\n" +
+                "\t\t\t\t\t\t<div class=\"social-cluster\">\n" +
+                "\t\t\t\t<ul class=\"social-cluster-list\">\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<li><a href=\"http://techcrunch.com/2014/02/21/whatsapp/#comments\" rel=\"external\" class=\"icon-comment\"><span class=\"social-count\"><fb:comments-count href=\"http://techcrunch.com/2014/02/21/whatsapp/\"></fb:comments-count></span></a></li>\n" +
+                "\t\t\t\t\t\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-facebook\"><span class=\"social-count\" id=\"fb-newshare-962037\"></span></a></li>\n" +
+                "\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-twitter\"><span class=\"social-count\" id=\"tweet-newshare-962037\"></span></a></li>\n" +
+                "\t\t\t\t\t<li><a href=\"#\" rel=\"external\" class=\"icon-linkedin\"><span class=\"social-count\" id=\"linkedin-newshare-962037\"></span></a></li>\n" +
+                "\t\t\t\t</ul>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t<div id=\"clear\" style=\"clear:both;\"></div>\n" +
+                "\t\t</div>\n" +
+                "\t</div>\n" +
+                "</li>\n" +
+                "STUFF_AFTER";
     }
 }
