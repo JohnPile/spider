@@ -2,6 +2,7 @@ package pile.spider.exec.workers;
 
 import com.google.common.collect.Multimap;
 import org.apache.log4j.Logger;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -38,13 +39,15 @@ class WorkerThread implements Runnable {
 
         try {
             LOGGER.debug("==== " + listUrl + " ====");
-            Document listDoc=jSoupConnectionFactory.newConnection(listUrl).get();
+            Connection conn=jSoupConnectionFactory.newConnection(listUrl);
+            Document listDoc=conn.get();
             listPageScanner.setDocument(listDoc);
             Elements listItems=listPageScanner.extractPageItems();
             for (Element listItem: listItems) {
                 // Retrieve the detail page
                 detailPageScanner=pageScannerFactory.newDetailPageScanner();
                 String detailUrl=detailPageScanner.extractDetailRef(listItem);
+
                 Document detailDoc=jSoupConnectionFactory.newConnection(detailUrl).get();
 
                 // Extract relevant fields into a multimap
