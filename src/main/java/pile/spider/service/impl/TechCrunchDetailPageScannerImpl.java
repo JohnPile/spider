@@ -90,11 +90,22 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
     private void interpretCompanyInfo(Document document, Interpretations interpretations) {
         // There doesn't appear to be a 100% reliable solution.
         // So, we'll accumulate a confidence score, and possibly enforce a minimum requirement after studying it.
+
+        // Company name is often in one of the tags
         Elements tags=document.select("meta[name=sailthru.tags]");
         if (tags.size()>0) {
-            // The unproven assumption is that the first tag is the company name.
             String company=tags.first().attr("content").split(",")[0];
-            interpretations.companyNameInterpretations.addInterpretation(company, 20);
+            interpretations.companyNameInterpretations.addInterpretation(company, 5);
+        }
+
+        // Company name is often in first four words of title
+        String title=document.select("meta[name=sailthru.title]").attr("content");
+        if (!Strings.isNullOrEmpty(title)) {
+            int i=0;
+            for (String word: title.split("\\s+")) {
+                if (++i==4) break;
+                interpretations.companyNameInterpretations.addInterpretation(word, 5);
+            }
         }
 
         // Find anchor tags in the article and look for matches in the first 4 words of our title.
@@ -105,21 +116,41 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
             for (Element anchor : anchors) {
                 String href=anchor.attr("href");
                 String companyWords[]=anchor.text().split("\\W");
-                int matchCount=0;
+                int matchScore=0;
+                int w=0;
                 for (String companyWord : companyWords) {
+                    w++;
                     for (int i=0; i<Math.min(4, titleWords.length); i++) {
                         if (companyWord.equals(titleWords[i])) {
-                            matchCount++;
+                            // Prefer earlier word matches
+                            matchScore+=20-i*w;
                         }
                     }
                 }
-                if (matchCount>0) {
-                    interpretations.companyNameInterpretations.addInterpretation(anchor.text(), 10 * matchCount);
-                    interpretations.companyWebsiteInterpretations.addInterpretation(href, 10*matchCount);
+                if (matchScore>0) {
+                    interpretations.companyNameInterpretations.addInterpretation(anchor.text(), matchScore);
+                    interpretations.companyWebsiteInterpretations.addInterpretation(href, matchScore);
                 }
             }
         }
 
+        // Company is often first company profiled in right column
+        Elements profiles=document.select("ul.crunchbase-accordion strong.key");
+        for (Element profile: profiles) {
+            if ("Founded".equals(profile.text())) {
+                String profileCompany=profile.parent().parent().parent().parent().select("h4.card-title").text();
+                interpretations.companyNameInterpretations.addInterpretation(profileCompany, 100);
+                Elements keys=profile.parent().parent().select("strong.key");
+                for (Element key : keys) {
+                    if ("Website".equals(key.text())) {
+                        String website=key.parent().select("a").first().attr("href");
+                        interpretations.companyWebsiteInterpretations.addInterpretation(website, 500);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
 
     }
 
