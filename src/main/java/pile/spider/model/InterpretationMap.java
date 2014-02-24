@@ -37,7 +37,7 @@ public class InterpretationMap {
                 max = interpretation.getConfidence();
             }
         }
-        if (topInterpretation==null) {
+        if (topInterpretation == null) {
             return new Interpretation(null, 0);
         }
         return topInterpretation;

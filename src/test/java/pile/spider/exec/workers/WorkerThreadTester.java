@@ -5,7 +5,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import pile.spider.service.DetailPageScanner;
@@ -19,10 +18,7 @@ import pile.spider.service.impl.TechCrunchSampleData;
 import java.net.URL;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class WorkerThreadTester {
@@ -30,16 +26,16 @@ public class WorkerThreadTester {
     @Test
     public void testWork() throws Exception {
         // Concrete implementation from sample data
-        Document listDoc=Jsoup.parse(TechCrunchSampleData.TWO_BLOCKS);
-        ListPageScanner listPageScanner=new TechCrunchListPageScannerImpl(listDoc);
+        Document listDoc = Jsoup.parse(TechCrunchSampleData.TWO_BLOCKS);
+        ListPageScanner listPageScanner = new TechCrunchListPageScannerImpl(listDoc);
 
         // Fakes
-        URL listUrl=new URL("http://example.com");
-        JSoupConnectionFactory jSoupConnectionFactory=mock(JSoupConnectionFactory.class);
-        Connection connection=mock(Connection.class);
-        DetailPageScanner detailPageScanner=mock(DetailPageScanner.class);
-        PageScannerFactory pageScannerFactory=mock(PageScannerFactory.class);
-        OutputProcessor outputProcessor=mock(OutputProcessor.class);
+        URL listUrl = new URL("http://example.com");
+        JSoupConnectionFactory jSoupConnectionFactory = mock(JSoupConnectionFactory.class);
+        Connection connection = mock(Connection.class);
+        DetailPageScanner detailPageScanner = mock(DetailPageScanner.class);
+        PageScannerFactory pageScannerFactory = mock(PageScannerFactory.class);
+        OutputProcessor outputProcessor = mock(OutputProcessor.class);
 
         // Actions
         when(jSoupConnectionFactory.newConnection(any(URL.class))).thenReturn(connection);
@@ -49,11 +45,11 @@ public class WorkerThreadTester {
         when(pageScannerFactory.newListPageScanner(null)).thenReturn(listPageScanner);
         when(detailPageScanner.extractDetailRef(any(Element.class))).thenReturn("http://example.com/detail");
 
-        WorkerThread worker=new WorkerThread(listUrl, jSoupConnectionFactory, pageScannerFactory, outputProcessor);
+        WorkerThread worker = new WorkerThread(listUrl, jSoupConnectionFactory, pageScannerFactory, outputProcessor);
         worker.run();
 
         // Verify
-        ArgumentCaptor<Multimap> multimap1=ArgumentCaptor.forClass(Multimap.class);
+        ArgumentCaptor<Multimap> multimap1 = ArgumentCaptor.forClass(Multimap.class);
         verify(outputProcessor, times(2)).processOutput(multimap1.capture());
     }
 }

@@ -8,7 +8,7 @@ public class InconceivableException extends RuntimeException {
      * caused us to ignore some possibility we just couldn't conceive of at the time.
      *
      * @param reasonThisShouldBeImpossible What might show up in our log.
-     * @param cause The underlying exception thrown.
+     * @param cause                        The underlying exception thrown.
      */
     public InconceivableException(String reasonThisShouldBeImpossible, Throwable cause) {
         super(reasonThisShouldBeImpossible, cause);

@@ -1,9 +1,7 @@
 package pile.spider.model;
 
-import org.jsoup.Jsoup;
 import org.junit.Test;
 import pile.spider.service.OutputProcessor;
-import pile.spider.service.impl.TechCrunchListPageScannerImpl;
 import pile.spider.service.impl.TechCrunchOutputProcessor;
 import pile.spider.service.impl.TechCrunchPageScannerFactory;
 
@@ -19,13 +17,13 @@ public class PageScannersTester {
     public void testAllAllowedSitesRepresented() {
 
         // First, validate that we'd fail when no AllowedSite is registered.
-        PageScannerFactories pageScannerFactories =new PageScannerFactories(null);
+        PageScannerFactories pageScannerFactories = new PageScannerFactories(null);
         assertNull(pageScannerFactories.getPageScannerFactory(AllowedSite.TechCrunch));
 
         // Now, register our site and verify the whole list.
-        OutputProcessor outputProcessor=new TechCrunchOutputProcessor(System.out);
-        TechCrunchPageScannerFactory tcFactory=new TechCrunchPageScannerFactory(outputProcessor);
-        pageScannerFactories =new PageScannerFactories(tcFactory);
+        OutputProcessor outputProcessor = new TechCrunchOutputProcessor(System.out);
+        TechCrunchPageScannerFactory tcFactory = new TechCrunchPageScannerFactory(outputProcessor);
+        pageScannerFactories = new PageScannerFactories(tcFactory);
         for (AllowedSite allowedSite : AllowedSite.values()) {
             assertNotNull(pageScannerFactories.getPageScannerFactory(allowedSite));
         }

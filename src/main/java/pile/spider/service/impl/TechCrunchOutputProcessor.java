@@ -19,16 +19,16 @@ public class TechCrunchOutputProcessor implements OutputProcessor {
 
     @Inject
     public TechCrunchOutputProcessor(@Named("TechCrunch") OutputStream out) {
-        writer=new OutputStreamWriter(new BufferedOutputStream(out), Charset.forName("UTF-8"));
+        writer = new OutputStreamWriter(new BufferedOutputStream(out), Charset.forName("UTF-8"));
     }
 
     @Override
     public void processOutput(Multimap<String, String> outputRecord) throws IOException {
-        String articleTitle=csvField(outputRecord.get("articleTitle"), null);
-        String articleUrl=csvField(outputRecord.get("articleUrl"), null);
-        String companyName=csvField(outputRecord.get("companyName"), "n/a");
-        String companyWebsite=csvField(outputRecord.get("companyWebsite"), "n/a");
-        if (articleTitle!=null && articleUrl!=null) {
+        String articleTitle = csvField(outputRecord.get("articleTitle"), null);
+        String articleUrl = csvField(outputRecord.get("articleUrl"), null);
+        String companyName = csvField(outputRecord.get("companyName"), "n/a");
+        String companyWebsite = csvField(outputRecord.get("companyWebsite"), "n/a");
+        if (articleTitle != null && articleUrl != null) {
             synchronized (this) {
                 writer.append(companyName + "," + companyWebsite + "," + articleTitle + "," + articleUrl + "\n");
             }
@@ -41,8 +41,8 @@ public class TechCrunchOutputProcessor implements OutputProcessor {
     }
 
     private String csvField(Collection<String> fields, String defaultField) {
-        String field=first(fields, defaultField);
-        if (field==null) {
+        String field = first(fields, defaultField);
+        if (field == null) {
             return null;
         }
         // TODO: data cleansing
@@ -50,7 +50,7 @@ public class TechCrunchOutputProcessor implements OutputProcessor {
     }
 
     private String first(Collection<String> fields, String defaultField) {
-        Iterator<String> it=fields.iterator();
+        Iterator<String> it = fields.iterator();
         if (!it.hasNext()) {
             return defaultField;
         }

@@ -7,12 +7,12 @@ public class SpiderSettings {
     private int poolSize;
 
     public SpiderSettings(String[] args, AllowedSite defaultSite, int defaultMaxSearchPages, int defaultPoolSize) {
-        site=args.length>0 ? AllowedSite.valueOf(args[0]) : defaultSite;
-        maxSearchPages=args.length>1 ? Integer.parseInt(args[1]) : defaultMaxSearchPages;
-        if (maxSearchPages==0) {
-            maxSearchPages=Integer.MAX_VALUE;
+        site = args.length > 0 ? AllowedSite.valueOf(args[0]) : defaultSite;
+        maxSearchPages = args.length > 1 ? Integer.parseInt(args[1]) : defaultMaxSearchPages;
+        if (maxSearchPages == 0) {
+            maxSearchPages = Integer.MAX_VALUE;
         }
-        poolSize=args.length>2 ? Integer.parseInt(args[2]) : defaultPoolSize;
+        poolSize = args.length > 2 ? Integer.parseInt(args[2]) : defaultPoolSize;
     }
 
     public AllowedSite getSite() {
@@ -23,5 +23,7 @@ public class SpiderSettings {
         return maxSearchPages;
     }
 
-    public int getPoolSize() { return poolSize; }
+    public int getPoolSize() {
+        return poolSize;
+    }
 }

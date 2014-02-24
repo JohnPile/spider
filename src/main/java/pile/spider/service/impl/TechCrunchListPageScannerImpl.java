@@ -18,16 +18,16 @@ public class TechCrunchListPageScannerImpl implements ListPageScanner {
 
     private static final Pattern BASE_URL_PATTERN = Pattern.compile("([^:]+://[^/]+).*");
     private static final Pattern PAGE_NUMBER_PATTERN = Pattern.compile("(.*/page/)([0-9]+)");
-    private Integer lastPage=null;
+    private Integer lastPage = null;
     private Document document;
 
     public TechCrunchListPageScannerImpl(Document document) {
-        this.document=document;
+        this.document = document;
     }
 
     @Override
     public void setDocument(Document document) {
-        this.document=document;
+        this.document = document;
     }
 
     @Override
@@ -39,9 +39,9 @@ public class TechCrunchListPageScannerImpl implements ListPageScanner {
     }
 
     private Integer getLastPage() {
-        if (lastPage==null) {
-            Element nav=document.select("ol.pagination li.ellipses").last().nextElementSibling();
-            lastPage=Integer.valueOf(nav.select("a").first().attr("href").replaceAll(".*/",""));
+        if (lastPage == null) {
+            Element nav = document.select("ol.pagination li.ellipses").last().nextElementSibling();
+            lastPage = Integer.valueOf(nav.select("a").first().attr("href").replaceAll(".*/", ""));
         }
         return lastPage;
     }
@@ -49,9 +49,9 @@ public class TechCrunchListPageScannerImpl implements ListPageScanner {
     public synchronized URL nextPage(URL currentPage) {
         Matcher m = PAGE_NUMBER_PATTERN.matcher(currentPage.toString());
         if (m.find()) {
-            String currPageNo=m.group(2);
-            Integer nextPage=Integer.valueOf(Integer.parseInt(currPageNo)+1);
-            if (nextPage.compareTo(getLastPage())>0) {
+            String currPageNo = m.group(2);
+            Integer nextPage = Integer.valueOf(Integer.parseInt(currPageNo) + 1);
+            if (nextPage.compareTo(getLastPage()) > 0) {
                 // No more pages
                 return null;
             }
@@ -75,44 +75,44 @@ public class TechCrunchListPageScannerImpl implements ListPageScanner {
      * Provide the URL navigating to the next page.
      */
     public URL nextPage() {
-        URL url=null;
-        Element nextPage=document.select("ol.pagination li").last();
-        if (nextPage!=null) nextPage=nextPage.select("a").first();
-        if (nextPage!=null && nextPage.text().startsWith("Next")) {
-            String ref=nextPage.attr("href");
+        URL url = null;
+        Element nextPage = document.select("ol.pagination li").last();
+        if (nextPage != null) nextPage = nextPage.select("a").first();
+        if (nextPage != null && nextPage.text().startsWith("Next")) {
+            String ref = nextPage.attr("href");
             if (ref.startsWith("/")) {
-                ref=ref.substring(1);
+                ref = ref.substring(1);
             }
-            String baseUrl="";
-            if (ref!=null && ref.length()>0) {
-                if (!ref.startsWith("http") && document.location()!=null) {
+            String baseUrl = "";
+            if (ref != null && ref.length() > 0) {
+                if (!ref.startsWith("http") && document.location() != null) {
                     Matcher m = BASE_URL_PATTERN.matcher(document.location());
                     if (m.find()) {
-                        baseUrl=m.group(1);
+                        baseUrl = m.group(1);
                     }
                     try {
-                        url=new URL(baseUrl + "/" + ref);
+                        url = new URL(baseUrl + "/" + ref);
                     } catch (MalformedURLException ex) {
-                        url=null;
+                        url = null;
                     }
                 } else if (ref.startsWith("http")) {
                     try {
-                        url=new URL(ref);
+                        url = new URL(ref);
                     } catch (MalformedURLException ex) {
-                        url=null;
+                        url = null;
                     }
                 }
             }
         }
-        if (url==null && document.location()!=null) {
+        if (url == null && document.location() != null) {
             Matcher m = PAGE_NUMBER_PATTERN.matcher(document.location());
             if (m.find()) {
-                String baseUrl=m.group(1);
-                int pageno=Integer.parseInt(m.group(1))+1;
+                String baseUrl = m.group(1);
+                int pageno = Integer.parseInt(m.group(1)) + 1;
                 try {
-                    url=new URL(baseUrl + pageno);
+                    url = new URL(baseUrl + pageno);
                 } catch (MalformedURLException e) {
-                    url=null;
+                    url = null;
                 }
             }
         }

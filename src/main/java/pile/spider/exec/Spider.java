@@ -8,13 +8,11 @@ import pile.spider.model.AllowedSite;
 import pile.spider.model.PageScannerFactories;
 import pile.spider.model.SpiderSettings;
 import pile.spider.module.SpiderModule;
-import pile.spider.service.ListPageScanner;
 import pile.spider.service.PageScannerFactory;
 import pile.spider.service.impl.JSoupConnectionFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * Main entry point for command line utility to crawl a site for content.
@@ -27,7 +25,7 @@ public class Spider {
 
     @Inject
     public Spider(JSoupConnectionFactory connectionFactory, PageScannerFactories pageScannerFactories) {
-        this.connectionFactory=connectionFactory;
+        this.connectionFactory = connectionFactory;
         this.pageScannerFactories = pageScannerFactories;
     }
 
