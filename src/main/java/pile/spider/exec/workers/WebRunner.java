@@ -60,4 +60,11 @@ public class WebRunner {
         executorPool.shutdown();
     }
 
+    private class RejectedExecutionHandlerImpl implements RejectedExecutionHandler {
+        @Override
+        public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+            // log
+        }
+    }
+
 }

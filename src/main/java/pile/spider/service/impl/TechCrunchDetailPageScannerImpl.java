@@ -94,8 +94,10 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
         // Company name is often in one of the tags
         Elements tags=document.select("meta[name=sailthru.tags]");
         if (tags.size()>0) {
-            String company=tags.first().attr("content").split(",")[0];
-            interpretations.companyNameInterpretations.addInterpretation(company, 5);
+            for (Element tag : tags) {
+                String company=tag.attr("content").split(",")[0];
+                interpretations.companyNameInterpretations.addInterpretation(company, 5);
+            }
         }
 
         // Company name is often in first four words of title
@@ -104,7 +106,7 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
             int i=0;
             for (String word: title.split("\\s+")) {
                 if (++i==4) break;
-                interpretations.companyNameInterpretations.addInterpretation(word, 5);
+                interpretations.companyNameInterpretations.addInterpretation(word, 10-i);
             }
         }
 
@@ -123,7 +125,7 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
                     for (int i=0; i<Math.min(4, titleWords.length); i++) {
                         if (companyWord.equals(titleWords[i])) {
                             // Prefer earlier word matches
-                            matchScore+=20-i*w;
+                            matchScore+=Math.max(20, 1+companyWords.length*4)-i*w;
                         }
                     }
                 }
@@ -143,9 +145,13 @@ public class TechCrunchDetailPageScannerImpl implements DetailPageScanner {
                 Elements keys=profile.parent().parent().select("strong.key");
                 for (Element key : keys) {
                     if ("Website".equals(key.text())) {
-                        String website=key.parent().select("a").first().attr("href");
-                        interpretations.companyWebsiteInterpretations.addInterpretation(website, 500);
+                        Element websiteElement=key.parent().select("a").first();
+                        if (websiteElement!=null) {
+                            String href=websiteElement.attr("href");
+                            interpretations.companyWebsiteInterpretations.addInterpretation(href, 500);
+                        }
                         break;
+
                     }
                 }
                 break;
