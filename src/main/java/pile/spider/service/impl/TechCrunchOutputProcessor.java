@@ -35,6 +35,11 @@ public class TechCrunchOutputProcessor implements OutputProcessor {
         }
     }
 
+    @Override
+    public void flush() throws IOException {
+        writer.flush();
+    }
+
     private String csvField(Collection<String> fields, String defaultField) {
         String field=first(fields, defaultField);
         if (field==null) {

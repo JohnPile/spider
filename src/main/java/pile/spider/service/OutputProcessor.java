@@ -8,4 +8,6 @@ public interface OutputProcessor {
 
     public void processOutput(Multimap<String,String> outputRecord) throws IOException;
 
+    public void flush() throws IOException;
+
 }

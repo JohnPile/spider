@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 
 public class WebRunner {
 
-    private static final Logger logger=Logger.getLogger(WebRunner.class);
+    private static final Logger LOGGER=Logger.getLogger(WebRunner.class);
 
     private final JSoupConnectionFactory connectionFactory;
     private final PageScannerFactory pageScannerFactory;
@@ -39,8 +39,8 @@ public class WebRunner {
         PageManager pageManager=new PageManager(pageScannerFactory, startingPage, maxPages);
         RejectedExecutionHandlerImpl rejectionHandler = new RejectedExecutionHandlerImpl();
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
-        int corePoolSize = 10;
-        int maxPoolSize = 20;
+        int corePoolSize = poolSize/2;
+        int maxPoolSize = poolSize;
         long keepAlive = 10;
         ThreadPoolExecutor executorPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAlive, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(corePoolSize), threadFactory, rejectionHandler);
         // Each thread processes one web page at a time
@@ -48,9 +48,11 @@ public class WebRunner {
         try {
             URL listUrl=pageManager.next();
             while (listUrl!=null) {
+                LOGGER.debug("Assigning page: " + listUrl);
                 executorPool.execute(new WorkerThread(listUrl, connectionFactory, pageScannerFactory, outputProcessor));
                 listUrl=pageManager.next();
             }
+            Thread.sleep(5000);
         } catch (InterruptedException ex) {
             // wakey wakey, eggs and bakey
         }

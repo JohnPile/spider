@@ -53,6 +53,7 @@ class WorkerThread implements Runnable {
                 // Print output
                 outputProcessor.processOutput(fieldMap);
             }
+            outputProcessor.flush();
         } catch (IOException ex) {
             LOGGER.error("Skipping url: " + listUrl.toString() + " due to " + ex.getMessage());
         }

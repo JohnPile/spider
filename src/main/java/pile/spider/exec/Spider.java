@@ -47,7 +47,7 @@ public class Spider {
         } catch (IOException ex) {
             throw new IllegalStateException(ex.getMessage(), ex);
         }
-        // System.exit(0);
+
     }
 
 }
