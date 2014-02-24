@@ -18,7 +18,7 @@ public class JSoupConnectionFactoryTester {
     public void testCreationUsingNullSite() {
         JSoupConnectionFactory factory=new JSoupConnectionFactory();
         try {
-            factory.newConnection(null);
+            factory.newConnection("");
             fail("Expected failure from required URL");
         } catch (IllegalArgumentException ex) {
             // Expected

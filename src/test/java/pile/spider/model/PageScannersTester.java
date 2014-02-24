@@ -2,7 +2,10 @@ package pile.spider.model;
 
 import org.jsoup.Jsoup;
 import org.junit.Test;
+import pile.spider.service.OutputProcessor;
 import pile.spider.service.impl.TechCrunchListPageScannerImpl;
+import pile.spider.service.impl.TechCrunchOutputProcessor;
+import pile.spider.service.impl.TechCrunchPageScannerFactory;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -16,13 +19,15 @@ public class PageScannersTester {
     public void testAllAllowedSitesRepresented() {
 
         // First, validate that we'd fail when no AllowedSite is registered.
-        PageScanners pageScanners=new PageScanners(null);
-        assertNull(pageScanners.getPageScanner(AllowedSite.TechCrunch));
+        PageScannerFactories pageScannerFactories =new PageScannerFactories(null);
+        assertNull(pageScannerFactories.getPageScannerFactory(AllowedSite.TechCrunch));
 
         // Now, register our site and verify the whole list.
-        pageScanners=new PageScanners(new TechCrunchListPageScannerImpl(Jsoup.parse("")));
+        OutputProcessor outputProcessor=new TechCrunchOutputProcessor(System.out);
+        TechCrunchPageScannerFactory tcFactory=new TechCrunchPageScannerFactory(outputProcessor);
+        pageScannerFactories =new PageScannerFactories(tcFactory);
         for (AllowedSite allowedSite : AllowedSite.values()) {
-            assertNotNull(pageScanners.getPageScanner(allowedSite));
+            assertNotNull(pageScannerFactories.getPageScannerFactory(allowedSite));
         }
 
     }

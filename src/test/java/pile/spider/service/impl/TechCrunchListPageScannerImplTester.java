@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 import pile.spider.service.ListPageScanner;
 
+import java.net.URL;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -18,27 +19,33 @@ import static org.mockito.Mockito.when;
 public class TechCrunchListPageScannerImplTester {
 
     @Test
-    public void testNextPageFromFirst() {
+    public void testNextPageFromFirst() throws Exception {
         Document doc=spy(Jsoup.parse(TechCrunchSampleData.FIRST_PAGE));
-        when(doc.location()).thenReturn("http://techcrunch.com");
+        String thisPage="http://techcrunch.com";
+        URL thisUrl=new URL(thisPage);
+        when(doc.location()).thenReturn(thisPage);
         ListPageScanner listPageScanner=new TechCrunchListPageScannerImpl(doc);
-        assertEquals("http://techcrunch.com/page/2", listPageScanner.nextPage().toString());
+        assertEquals("http://techcrunch.com/page/2", listPageScanner.nextPage(thisUrl).toString());
     }
 
     @Test
-    public void testNextPageFromMiddle() {
+    public void testNextPageFromMiddle() throws Exception {
         Document doc=spy(Jsoup.parse(TechCrunchSampleData.MIDDLE_PAGE));
-        when(doc.location()).thenReturn("http://techcrunch.com/page/100");
+        String thisPage="http://techcrunch.com/page/100";
+        URL thisUrl=new URL(thisPage);
+        when(doc.location()).thenReturn(thisPage);
         ListPageScanner listPageScanner=new TechCrunchListPageScannerImpl(doc);
-        assertEquals("http://techcrunch.com/page/101", listPageScanner.nextPage().toString());
+        assertEquals("http://techcrunch.com/page/101", listPageScanner.nextPage(thisUrl).toString());
     }
 
     @Test
-    public void testNextPageFromLast() {
+    public void testNextPageFromLast() throws Exception {
         Document doc=spy(Jsoup.parse(TechCrunchSampleData.LAST_PAGE));
-        when(doc.location()).thenReturn("http://techcrunch.com");
+        String thisPage="http://techcrunch.com/page/9999";
+        URL thisUrl=new URL(thisPage);
+        when(doc.location()).thenReturn(thisPage);
         ListPageScanner listPageScanner=new TechCrunchListPageScannerImpl(doc);
-        assertEquals(null, listPageScanner.nextPage());
+        assertEquals(null, listPageScanner.nextPage(thisUrl));
     }
 
     @Test
@@ -46,7 +53,7 @@ public class TechCrunchListPageScannerImplTester {
         Document doc=spy(Jsoup.parse(TechCrunchSampleData.TWO_BLOCKS));
         when(doc.location()).thenReturn("http://techcrunch.com");
         ListPageScanner listPageScanner=new TechCrunchListPageScannerImpl(doc);
-        Elements articles=listPageScanner.fetchPageItems();
+        Elements articles=listPageScanner.extractPageItems();
         // Exactly two articles
         assertEquals(2, articles.size());
         Iterator<Element> iterator=articles.iterator();

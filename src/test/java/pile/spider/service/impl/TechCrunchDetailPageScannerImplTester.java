@@ -19,8 +19,8 @@ public class TechCrunchDetailPageScannerImplTester {
      */
     public void testCompanyNameGoogle() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_GOOGLE);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         Collection<String> companyNameFields=fields.get("companyName");
         assertTrue(companyNameFields.contains("Google"));
         Collection<String> companyWebsiteFields=fields.get("companyWebsite");
@@ -33,8 +33,8 @@ public class TechCrunchDetailPageScannerImplTester {
      */
     public void testCompanyNameHyv() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_HYV);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         Collection<String> companyNameFields=fields.get("companyName");
         assertTrue(companyNameFields.contains("Hyv"));
         Collection<String> companyWebsiteFields=fields.get("companyWebsite");
@@ -44,8 +44,8 @@ public class TechCrunchDetailPageScannerImplTester {
     @Test
     public void testArticleTitleGoogle() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_GOOGLE);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         String articleTitle=fields.get("articleTitle").toArray(new String[] {})[0];
         assertEquals("The Google Smartwatch Is Real, And It’s Coming Soon (But Maybe Not Too Soon)", articleTitle);
     }
@@ -53,8 +53,8 @@ public class TechCrunchDetailPageScannerImplTester {
     @Test
     public void testArticleTitleHyv() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_HYV);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         String articleTitle=fields.get("articleTitle").toArray(new String[] {})[0];
         assertEquals("Meet Hyv, A Startup That Can’t Wait For Phone Unlocking To Be Made Legal", articleTitle);
     }
@@ -62,8 +62,8 @@ public class TechCrunchDetailPageScannerImplTester {
     @Test
     public void testArticleUrlGoogle() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_GOOGLE);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         String articleUrl=fields.get("articleUrl").toArray(new String[] {})[0];
         assertEquals("http://techcrunch.com/2014/02/22/the-google-smartwatch-is-real-and-its-coming-soon-but-maybe-not-too-soon/", articleUrl);
     }
@@ -71,8 +71,8 @@ public class TechCrunchDetailPageScannerImplTester {
     @Test
     public void testArticleUrlHyv() {
         Document doc= Jsoup.parse(TechCrunchSampleData.DETAIL_PAGE_HYV);
-        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl(doc);
-        Multimap<String,String> fields=scanner.extractFields();
+        DetailPageScanner scanner=new TechCrunchDetailPageScannerImpl();
+        Multimap<String,String> fields=scanner.extractFields(doc);
         String articleUrl=fields.get("articleUrl").toArray(new String[] {})[0];
         assertEquals("http://techcrunch.com/2014/02/21/meet-hyv-a-startup-that-cant-wait-for-phone-unlocking-to-be-made-legal/", articleUrl);
     }
